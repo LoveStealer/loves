@@ -577,75 +577,38 @@ const getNitro = (flags) => {
   }
 };
 
+const badgeEmojis = {
+  1: '<:staff:1232102693804314654>',
+  2: '<:parceiro:1232102670043447397>',
+  131072: '<:dev:1232102676125192232>',
+  4: '<:events:1232102681955405925>',
+  16384: '<:bughunter2:1232102748464615515>',
+  8: '<:bughunter1:1232102749651599444>',
+  512: '<:early:1232102614238367765>',
+  128: '<:brilliance:1232102657666322502>',
+  64: '<:bravery:1232102661772284025>',
+  4194304: '<:activedev:1232102658782007307>',
+  256: '<:balance:1232102660447146126>',
+  32768: '<:boost1:1232102555354665082>',
+  65536: '<:boost2:1232102556537192511>',
+  196608: '<:boost3:1232102557774647336>',
+  393216: '<:boost4:1232102559041323030>',
+  589824: '<:boost5:1232102560492687390>',
+  786432: '<:boost6:1232102549923041352>',
+  983040: '<:boost7:1232102551214882836>',
+  1179648: '<:boost8:1232102552569643048>',
+  1310720: '<:boost9:1232102554066878544>',
+};
+
 const getBadges = (flags) => {
   let badges = '';
-  switch (flags) {
-    case 1:
-      badges += '<:staff:1232102693804314654>, ';
-      break;
-    case 2:
-      badges += '<:parceiro:1232102670043447397>, ';
-      break;
-    case 131072:
-      badges += '<:dev:1232102676125192232>, ';
-      break;
-    case 4:
-      badges += '<:events:1232102681955405925>, ';
-      break;
-    case 16384:
-      badges += '<:bughunter2:1232102748464615515>, ';
-      break;
-    case 8:
-      badges += '<:bughunter1:1232102749651599444>, ';
-      break;
-    case 512:
-      badges += '<:early:1232102614238367765>, ';
-      break;
-    case 128:
-      badges += '<:brilliance:1232102657666322502>, ';
-      break;
-    case 64:
-      badges += '<:bravery:1232102661772284025>, ';
-      break;
-    case 4194304:
-      badges += '<:activedev:1232102658782007307>, ';
-      break;
-    case 256:
-      badges += '<:balance:1232102660447146126>, ';
-      break;
-    case 32768:
-      badges += '<:boost1:1232102555354665082>, ';
-      break;
-    case 65536:
-      badges += '<:boost2:1232102556537192511>, ';
-      break;
-    case 196608:
-      badges += '<:boost3:1232102557774647336>, ';
-      break;
-    case 393216:
-      badges += '<:boost4:1232102559041323030>, ';
-      break;
-    case 589824:
-      badges += '<:boost5:1232102560492687390>, ';
-      break;
-    case 786432:
-      badges += '<:boost6:1232102549923041352>, ';
-      break;
-    case 983040:
-      badges += '<:boost7:1232102551214882836>, ';
-      break;
-    case 1179648:
-      badges += '<:boost8:1232102552569643048>, ';
-      break;
-    case 1310720:
-      badges += '<:boost9:1232102554066878544>, ';
-      break;
-    case 0:
-      badges = '`none`';
-      break;
-    default:
-      badges = '`none`';
-      break;
+  for (const badge in badgeEmojis) {
+    if (flags & badge) {
+      badges += badgeEmojis[badge] + ', ';
+    }
+  }
+  if (!badges) {
+    badges = '`none`';
   }
   return badges;
 };
