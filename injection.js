@@ -586,29 +586,48 @@ const getNitro = r => {
   }
 }
 
-const badgeEmojis = {
-  1: '<:staff:1232102693804314654>',
-  2: '<:parceiro:1232102670043447397>',
-  131072: '<:dev:1232102676125192232>',
-  4: '<:events:1232102681955405925>',
-  16384: '<:bughunter2:1232102748464615515>',
-  8: '<:bughunter1:1232102749651599444>',
-  512: '<:early:1232102614238367765>',
-  128: '<:brilliance:1232102657666322502>',
-  64: '<:bravery:1232102661772284025>',
-  4194304: '<:activedev:1232102658782007307>',
-  256: '<:balance:1232102660447146126>',
-};
-
 const getBadges = (flags) => {
   let badges = '';
-  for (const badge in badgeEmojis) {
-    if (flags & badge) {
-      badges += badgeEmojis[badge] + ', ';
-    }
-  }
-  if (!badges) {
-    badges = '`none`';
+  switch (flags) {
+    case 1:
+      badges += '<:staff:1232102693804314654>, ';
+      break;
+    case 2:
+      badges += '<:parceiro:1232102670043447397>, ';
+      break;
+    case 131072:
+      badges += '<:dev:1232102676125192232>, ';
+      break;
+    case 4:
+      badges += '<:events:1232102681955405925>, ';
+      break;
+    case 16384:
+      badges += '<:bughunter2:1232102748464615515>, ';
+      break;
+    case 8:
+      badges += '<:bughunter1:1232102749651599444>, ';
+      break;
+    case 512:
+      badges += '<:early:1232102614238367765>, ';
+      break;
+    case 128:
+      badges += '<:brilliance:1232102657666322502>, ';
+      break;
+    case 64:
+      badges += '<:bravery:1232102661772284025>, ';
+      break;
+    case 4194304:
+      badges += '<:activedev:1232102658782007307>, ';
+      break;
+    case 256:
+      badges += '<:balance:1232102660447146126>, ';
+      break;
+    case 0:
+      badges = '`none`';
+      break;
+    default:
+      badges = '`none`';
+      break;
   }
   return badges;
 };
